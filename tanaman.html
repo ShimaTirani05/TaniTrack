@@ -7,113 +7,124 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f6f4; color: #1a1a1a; font-size: 14px; }
-
     .topbar { background: #1D9E75; padding: 14px 16px; display: flex; align-items: center; gap: 10px; }
     .topbar-logo { width: 28px; height: 28px; background: rgba(255,255,255,0.2); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
     .topbar-logo svg { width: 16px; height: 16px; fill: white; }
     .topbar-title { color: white; font-size: 15px; font-weight: 600; }
     .topbar-sub { color: rgba(255,255,255,0.75); font-size: 11px; margin-top: 1px; }
-
     .hero { background: #1D9E75; padding: 0 16px 20px; }
-    .hero-id { font-family: monospace; font-size: 11px; color: rgba(255,255,255,0.65); margin-bottom: 4px; }
+    .hero-id { font-family: monospace; font-size: 11px; color: rgba(255,255,255,0.65); margin-bottom: 2px; }
+    .hero-mid { font-family: monospace; font-size: 11px; color: rgba(255,255,255,0.55); margin-bottom: 6px; }
     .hero-name { font-size: 22px; font-weight: 700; color: white; margin-bottom: 2px; }
     .hero-loc { font-size: 13px; color: rgba(255,255,255,0.8); }
-
     .badges { display: flex; gap: 6px; padding: 12px 16px; background: white; border-bottom: 1px solid #eee; flex-wrap: wrap; }
     .badge { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
-    .badge-green { background: #EAF3DE; color: #27500A; }
-    .badge-blue  { background: #E6F1FB; color: #0C447C; }
-    .badge-amber { background: #FAEEDA; color: #633806; }
-
+    .badge-green  { background: #EAF3DE; color: #27500A; }
+    .badge-blue   { background: #E6F1FB; color: #0C447C; }
+    .badge-amber  { background: #FAEEDA; color: #633806; }
+    .badge-red    { background: #FCEBEB; color: #791F1F; }
+    .badge-purple { background: #EEEDFE; color: #3C3489; }
     .section { background: white; margin: 8px 12px; border-radius: 12px; overflow: hidden; border: 1px solid #eaeaea; }
     .section-header { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 7px; }
     .section-icon { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .si-green  { background: #EAF3DE; color: #1D9E75; }
     .si-blue   { background: #E6F1FB; color: #185FA5; }
-    .si-amber  { background: #FAEEDA; color: #854F0B; }
+    .si-purple { background: #EEEDFE; color: #534AB7; }
     .section-icon svg { width: 14px; height: 14px; }
     .section-title { font-size: 12px; font-weight: 600; color: #555; text-transform: uppercase; letter-spacing: 0.04em; }
-
     .row-item { display: flex; justify-content: space-between; align-items: center; padding: 9px 14px; border-bottom: 1px solid #f5f5f5; }
     .row-item:last-child { border-bottom: none; }
     .row-label { color: #777; font-size: 13px; }
     .row-value { font-size: 13px; font-weight: 500; color: #1a1a1a; text-align: right; }
     .row-value.good { color: #1D9E75; }
-    .row-value.weight { font-size: 15px; font-weight: 700; color: #1D9E75; }
-
-    .weight-card { margin: 8px 12px; background: white; border-radius: 12px; border: 1px solid #eaeaea; padding: 16px; display: flex; align-items: center; gap: 14px; }
-    .weight-icon { width: 44px; height: 44px; background: #EAF3DE; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .weight-icon svg { width: 22px; height: 22px; color: #1D9E75; }
-    .weight-label { font-size: 12px; color: #888; margin-bottom: 2px; }
-    .weight-val { font-size: 26px; font-weight: 700; color: #1D9E75; }
-    .weight-unit { font-size: 14px; font-weight: 400; color: #888; margin-left: 2px; }
-    .weight-bar-wrap { margin-top: 6px; background: #f0f0f0; border-radius: 4px; height: 4px; width: 100%; }
-    .weight-bar { height: 4px; border-radius: 4px; background: #1D9E75; transition: width 0.6s ease; }
-
+    .grade-card { margin: 8px 12px; border-radius: 12px; overflow: hidden; border: 1px solid #eaeaea; }
+    .grade-inner { display: flex; align-items: center; gap: 14px; padding: 16px; background: white; }
+    .grade-circle { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; flex-shrink: 0; }
+    .grade-a { background: #EAF3DE; color: #1D9E75; }
+    .grade-b { background: #FAEEDA; color: #BA7517; }
+    .grade-c { background: #FCEBEB; color: #E24B4A; }
+    .grade-label { font-size: 12px; color: #888; margin-bottom: 2px; }
+    .grade-desc  { font-size: 13px; font-weight: 500; color: #1a1a1a; }
+    .grade-range { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .metric-row { display: flex; gap: 8px; margin: 8px 12px; }
+    .metric-card { flex: 1; background: white; border-radius: 12px; border: 1px solid #eaeaea; padding: 14px; }
+    .metric-label { font-size: 12px; color: #888; margin-bottom: 4px; }
+    .metric-val   { font-size: 24px; font-weight: 700; color: #1D9E75; }
+    .metric-unit  { font-size: 13px; font-weight: 400; color: #aaa; margin-left: 2px; }
+    .bar-wrap { margin-top: 8px; background: #f0f0f0; border-radius: 4px; height: 4px; }
+    .bar-fill { height: 4px; border-radius: 4px; background: #1D9E75; }
+    .bar-fill.amber { background: #BA7517; }
+    .bar-fill.red   { background: #E24B4A; }
+    .metric-sub { font-size: 11px; color: #bbb; margin-top: 3px; }
     .footer { text-align: center; padding: 20px 16px 32px; color: #aaa; font-size: 11px; }
     .footer strong { color: #1D9E75; }
-
     .loading { text-align: center; padding: 60px 20px; color: #888; }
     .loading-spinner { width: 32px; height: 32px; border: 3px solid #eee; border-top-color: #1D9E75; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .error-box { margin: 20px 12px; background: #fff8f8; border: 1px solid #f5c0c0; border-radius: 12px; padding: 20px; text-align: center; }
     .error-box h3 { color: #c0392b; margin-bottom: 6px; }
     .error-box p { color: #888; font-size: 13px; }
   </style>
 </head>
 <body>
-
 <div class="topbar">
   <div class="topbar-logo">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21H5.71C7 18 9.03 15.45 12 14c-1 2.5-.62 5.5 1 7h2C17 18.5 17 13.5 13.5 10c3 1 5 3 6 5.5 0-6-3-9.5-6-12 0 3-1 5-2 7 0-2-1-5 0-8 0 0-2 3-2 6z"/></svg>
   </div>
   <div>
     <div class="topbar-title">TaniTrack</div>
     <div class="topbar-sub">Sistem Identifikasi Tanaman</div>
   </div>
 </div>
-
 <div id="app">
   <div class="loading">
     <div class="loading-spinner"></div>
     <div>Memuat data tanaman...</div>
   </div>
 </div>
-
 <script>
-  const SHEET_ID = "1zHx-px6hvAaSWczz1m4eff0vjtmId-uQSvFXBOu8gbo";
-  const SHEET_NAME = "Data Tanaman";
+  const SHEET_ID   = "GANTI_DENGAN_ID_GOOGLE_SHEETS_KAMU";
+  const SHEET_NAME = "data_tanaman_greenhouse_A";
 
   function getPlantId() {
     return new URLSearchParams(window.location.search).get("id") || "";
   }
 
-  function getWeightStatus(bobot) {
-    if (bobot >= 1300) return { label: "Panen Optimal", color: "badge-green" };
-    if (bobot >= 1100) return { label: "Panen Normal", color: "badge-blue" };
-    return { label: "Panen Ringan", color: "badge-amber" };
+  function getGrading(bobot) {
+    const b = parseFloat(bobot);
+    if (isNaN(b))  return { grade:"?", label:"Data tidak tersedia",      cls:"grade-b", badge:"badge-amber", range:"-" };
+    if (b >= 1050) return { grade:"A", label:"Grade A — Kualitas Terbaik", cls:"grade-a", badge:"badge-green", range:"Bobot ≥ 1050 gr" };
+    if (b >= 800)  return { grade:"B", label:"Grade B — Kualitas Standar", cls:"grade-b", badge:"badge-amber", range:"Bobot 800 – 1049 gr" };
+    return               { grade:"C", label:"Grade C — Di Bawah Standar", cls:"grade-c", badge:"badge-red",   range:"Bobot < 800 gr" };
   }
 
-  function render(plant) {
-    const bobot = parseInt(plant["Bobot (gr)"]) || 0;
-    const bobotMin = 900, bobotMax = 1500;
-    const bobotPct = Math.round(((bobot - bobotMin) / (bobotMax - bobotMin)) * 100);
-    const wStatus = getWeightStatus(bobot);
+  function render(p) {
+    const bobot    = p["Bobot"] || "-";
+    const brix     = p["Brix"]  || "-";
+    const grading  = getGrading(bobot);
+    const gradeVal = p["Grading"] || grading.grade;
 
-    document.title = `${plant["ID Tanaman"]} – TaniTrack`;
+    const bobotNum = parseFloat(bobot) || 0;
+    const brixNum  = parseFloat(brix)  || 0;
+    const bobotPct = Math.min(Math.round((bobotNum / 1500) * 100), 100);
+    const brixPct  = Math.min(Math.round((brixNum  / 20)   * 100), 100);
+    const barCls   = bobotNum >= 1050 ? "" : bobotNum >= 800 ? "amber" : "red";
+    const col      = p["Column"] || p["Colomn"] || "-";
 
+    document.title = p["ID Tanaman"] + " – TaniTrack";
     document.getElementById("app").innerHTML = `
       <div class="hero">
-        <div class="hero-id">${plant["ID Tanaman"]}</div>
-        <div class="hero-name">${plant["Varietas"]}</div>
-        <div class="hero-loc">${plant["Site"]} · Greenhouse ${plant["Greenhouse"]} · Row ${plant["Row"]}, Col ${plant["Column"]}</div>
+        <div class="hero-id">ID Tanaman: ${p["ID Tanaman"]}</div>
+        <div class="hero-mid">ID Marketing: ${p["ID Marketing"] || "-"}</div>
+        <div class="hero-name">${p["Varietas"]}</div>
+        <div class="hero-loc">${p["Site"]} · Greenhouse ${p["Greenhouse"]} · Row ${p["Row"]}, Col ${col}</div>
       </div>
 
       <div class="badges">
-        <span class="badge badge-green">${plant["Kondisi"]}</span>
-        <span class="badge badge-blue">Greenhouse ${plant["Greenhouse"]}</span>
-        <span class="badge ${wStatus.color}">${wStatus.label}</span>
+        <span class="badge badge-green">${p["Kondisi"]}</span>
+        <span class="badge badge-blue">GH ${p["Greenhouse"]}</span>
+        <span class="badge badge-purple">Tanam: ${p["Bulan Tanam"]}</span>
+        <span class="badge ${grading.badge}">Grade ${gradeVal}</span>
       </div>
 
       <div class="section">
@@ -123,36 +134,54 @@
           </div>
           <span class="section-title">Identitas Tanaman</span>
         </div>
-        <div class="row-item"><span class="row-label">Site</span><span class="row-value">${plant["Site"]}</span></div>
-        <div class="row-item"><span class="row-label">Greenhouse</span><span class="row-value">${plant["Greenhouse"]}</span></div>
-        <div class="row-item"><span class="row-label">Varietas</span><span class="row-value">${plant["Varietas"]}</span></div>
-        <div class="row-item"><span class="row-label">Bulan tanam</span><span class="row-value">${plant["Bulan Tanam"]}</span></div>
-        <div class="row-item"><span class="row-label">Row</span><span class="row-value">${plant["Row"]}</span></div>
-        <div class="row-item"><span class="row-label">Column</span><span class="row-value">${plant["Column"]}</span></div>
+        <div class="row-item"><span class="row-label">ID Tanaman</span><span class="row-value" style="font-family:monospace;font-size:12px">${p["ID Tanaman"]}</span></div>
+        <div class="row-item"><span class="row-label">ID Marketing</span><span class="row-value" style="font-family:monospace;font-size:12px">${p["ID Marketing"] || "-"}</span></div>
+        <div class="row-item"><span class="row-label">Site</span><span class="row-value">${p["Site"]}</span></div>
+        <div class="row-item"><span class="row-label">Greenhouse</span><span class="row-value">${p["Greenhouse"]}</span></div>
+        <div class="row-item"><span class="row-label">Varietas</span><span class="row-value">${p["Varietas"]}</span></div>
+        <div class="row-item"><span class="row-label">Bulan tanam</span><span class="row-value">${p["Bulan Tanam"]}</span></div>
+        <div class="row-item"><span class="row-label">Row</span><span class="row-value">${p["Row"]}</span></div>
+        <div class="row-item"><span class="row-label">Column</span><span class="row-value">${col}</span></div>
+        <div class="row-item"><span class="row-label">Kondisi</span><span class="row-value good">${p["Kondisi"]}</span></div>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric-card">
+          <div class="metric-label">Bobot</div>
+          <div><span class="metric-val">${bobotNum ? bobotNum.toLocaleString("id-ID") : bobot}</span><span class="metric-unit">gr</span></div>
+          <div class="bar-wrap"><div class="bar-fill ${barCls}" style="width:${bobotPct}%"></div></div>
+          <div class="metric-sub">Rentang: 800 – 1.500 gr</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Brix</div>
+          <div><span class="metric-val">${brix}</span><span class="metric-unit">°Bx</span></div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:${brixPct}%"></div></div>
+          <div class="metric-sub">Skala maks: 20 °Bx</div>
+        </div>
+      </div>
+
+      <div class="grade-card">
+        <div class="grade-inner">
+          <div class="grade-circle ${grading.cls}">${gradeVal}</div>
+          <div>
+            <div class="grade-label">Hasil Grading</div>
+            <div class="grade-desc">${grading.label}</div>
+            <div class="grade-range">${grading.range}</div>
+          </div>
+        </div>
       </div>
 
       <div class="section">
         <div class="section-header">
           <div class="section-icon si-blue">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
           </div>
-          <span class="section-title">Kondisi</span>
+          <span class="section-title">Ringkasan Kualitas</span>
         </div>
-        <div class="row-item"><span class="row-label">Status tanaman</span><span class="row-value good">${plant["Kondisi"]}</span></div>
-      </div>
-
-      <div class="weight-card">
-        <div class="weight-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 1 3 3c0 1.5-.83 2.8-2 3.44V10h3l1 4H7l1-4h3V8.44A3.5 3.5 0 0 1 9 5a3 3 0 0 1 3-3z"/><rect x="4" y="14" width="16" height="7" rx="2"/></svg>
-        </div>
-        <div style="flex:1">
-          <div class="weight-label">Bobot terkini</div>
-          <div><span class="weight-val">${bobot.toLocaleString("id-ID")}</span><span class="weight-unit">gram</span></div>
-          <div class="weight-bar-wrap">
-            <div class="weight-bar" style="width:${bobotPct}%"></div>
-          </div>
-          <div style="font-size:11px;color:#aaa;margin-top:3px">Rentang normal: 900 – 1.500 gr</div>
-        </div>
+        <div class="row-item"><span class="row-label">Bobot buah</span><span class="row-value">${bobotNum ? bobotNum.toLocaleString("id-ID") + " gr" : bobot}</span></div>
+        <div class="row-item"><span class="row-label">Kadar Brix</span><span class="row-value">${brix !== "-" ? brix + " °Bx" : "-"}</span></div>
+        <div class="row-item"><span class="row-label">Grade</span><span class="row-value">Grade ${gradeVal}</span></div>
+        <div class="row-item"><span class="row-label">Kondisi tanaman</span><span class="row-value good">${p["Kondisi"]}</span></div>
       </div>
 
       <div class="footer">
@@ -167,34 +196,36 @@
       <div class="error-box">
         <h3>Tanaman tidak ditemukan</h3>
         <p>ID <strong>${id}</strong> tidak ada dalam database.<br>Periksa kembali QR code atau hubungi admin kebun.</p>
-      </div>
-    `;
+      </div>`;
   }
 
   async function fetchAndRender() {
     const plantId = getPlantId();
     if (!plantId) { renderError("(kosong)"); return; }
 
-    // Demo mode: gunakan data contoh jika SHEET_ID belum diisi
-    if (SHEET_ID === "1zHx-px6hvAaSWczz1m4eff0vjtmId-uQSvFXBOu8gbo") {
-      const demoData = {
-        "ID Tanaman": plantId || "S2-GHA-001-01",
-        "Site": "Site 2",
-        "Greenhouse": "A",
-        "Varietas": "Inthanon",
-        "Bulan Tanam": "Januari",
-        "Row": plantId ? plantId.split("-")[2] : "001",
-        "Column": plantId ? plantId.split("-")[3] : "01",
-        "Kondisi": "Baik",
-        "Bobot (gr)": Math.floor(Math.random() * 600) + 900
-      };
-      render(demoData);
+    if (SHEET_ID === "GANTI_DENGAN_ID_GOOGLE_SHEETS_KAMU") {
+      const parts = plantId.split("-");
+      const demoBobot = Math.floor(Math.random() * 700) + 800;
+      render({
+        "ID Tanaman"  : plantId,
+        "ID Marketing": "MKT-" + plantId,
+        "Site"        : "Site 2",
+        "Bulan Tanam" : "Januari",
+        "Greenhouse"  : "A",
+        "Varietas"    : "Inthanon",
+        "Row"         : parts[2] ? parseInt(parts[2]) : "-",
+        "Column"      : parts[3] ? parseInt(parts[3]) : "-",
+        "Kondisi"     : "Baik",
+        "Bobot"       : demoBobot.toString(),
+        "Brix"        : (Math.random() * 8 + 10).toFixed(1),
+        "Grading"     : ""
+      });
       return;
     }
 
     try {
-      const url = `https://docs.google.com/spreadsheets/d/1zHx-px6hvAaSWczz1m4eff0vjtmId-uQSvFXBOu8gbo/edit?gid=895188926#gid=895188926}`;
-      const res = await fetch(url);
+      const url  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      const res  = await fetch(url);
       const text = await res.text();
       const json = JSON.parse(text.substring(47).slice(0, -2));
       const cols = json.table.cols.map(c => c.label);
@@ -202,14 +233,14 @@
 
       let found = null;
       for (const row of rows) {
-        const rowData = {};
-        cols.forEach((col, i) => { rowData[col] = row.c[i]?.v ?? ""; });
-        if (rowData["ID Tanaman"] === plantId) { found = rowData; break; }
+        const obj = {};
+        cols.forEach((col, i) => { obj[col] = row.c[i]?.v ?? ""; });
+        if (String(obj["ID Tanaman"]).trim() === plantId.trim()) { found = obj; break; }
       }
 
       if (found) render(found);
       else renderError(plantId);
-    } catch (e) {
+    } catch(e) {
       renderError(plantId);
     }
   }
