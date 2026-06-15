@@ -64,6 +64,7 @@
     .error-box { margin: 20px 12px; background: #fff8f8; border: 1px solid #f5c0c0; border-radius: 12px; padding: 20px; text-align: center; }
     .error-box h3 { color: #c0392b; margin-bottom: 6px; }
     .error-box p { color: #888; font-size: 13px; }
+    .error-box code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
   </style>
 </head>
 <body>
@@ -92,41 +93,39 @@
 
   function getGrading(bobot) {
     const b = parseFloat(bobot);
-    if (isNaN(b))  return { grade:"?", label:"Data tidak tersedia",      cls:"grade-b", badge:"badge-amber", range:"-" };
-    if (b >= 1050) return { grade:"A", label:"Grade A — Kualitas Terbaik", cls:"grade-a", badge:"badge-green", range:"Bobot ≥ 1050 gr" };
-    if (b >= 800)  return { grade:"B", label:"Grade B — Kualitas Standar", cls:"grade-b", badge:"badge-amber", range:"Bobot 800 – 1049 gr" };
+    if (isNaN(b))  return { grade:"?", label:"Data belum tersedia",        cls:"grade-b", badge:"badge-amber", range:"-" };
+    if (b >= 1050) return { grade:"A", label:"Grade A — Kualitas Terbaik", cls:"grade-a", badge:"badge-green", range:"Bobot >= 1050 gr" };
+    if (b >= 800)  return { grade:"B", label:"Grade B — Kualitas Standar", cls:"grade-b", badge:"badge-amber", range:"Bobot 800 - 1049 gr" };
     return               { grade:"C", label:"Grade C — Di Bawah Standar", cls:"grade-c", badge:"badge-red",   range:"Bobot < 800 gr" };
   }
 
   function render(p) {
-    const bobot    = p["Bobot"] || "-";
-    const brix     = p["Brix"]  || "-";
+    const bobot    = (p["Bobot"] !== "" && p["Bobot"] !== null && p["Bobot"] !== undefined) ? p["Bobot"] : "-";
+    const brix     = (p["Brix"]  !== "" && p["Brix"]  !== null && p["Brix"]  !== undefined) ? p["Brix"]  : "-";
     const grading  = getGrading(bobot);
-    const gradeVal = p["Grading"] || grading.grade;
+    const gradeVal = (p["Grading"] !== "" && p["Grading"] !== null && p["Grading"] !== undefined) ? p["Grading"] : grading.grade;
+    const col      = p["Column"] || p["Colomn"] || "-";
 
     const bobotNum = parseFloat(bobot) || 0;
     const brixNum  = parseFloat(brix)  || 0;
     const bobotPct = Math.min(Math.round((bobotNum / 1500) * 100), 100);
     const brixPct  = Math.min(Math.round((brixNum  / 20)   * 100), 100);
     const barCls   = bobotNum >= 1050 ? "" : bobotNum >= 800 ? "amber" : "red";
-    const col      = p["Column"] || p["Colomn"] || "-";
 
     document.title = p["ID Tanaman"] + " – TaniTrack";
     document.getElementById("app").innerHTML = `
       <div class="hero">
         <div class="hero-id">ID Tanaman: ${p["ID Tanaman"]}</div>
         <div class="hero-mid">ID Marketing: ${p["ID Marketing"] || "-"}</div>
-        <div class="hero-name">${p["Varietas"]}</div>
-        <div class="hero-loc">${p["Site"]} · Greenhouse ${p["Greenhouse"]} · Row ${p["Row"]}, Col ${col}</div>
+        <div class="hero-name">${p["Varietas"] || "-"}</div>
+        <div class="hero-loc">${p["Site"] || "-"} · Greenhouse ${p["Greenhouse"] || "-"} · Row ${p["Row"] || "-"}, Col ${col}</div>
       </div>
-
       <div class="badges">
-        <span class="badge badge-green">${p["Kondisi"]}</span>
-        <span class="badge badge-blue">GH ${p["Greenhouse"]}</span>
-        <span class="badge badge-purple">Tanam: ${p["Bulan Tanam"]}</span>
+        <span class="badge badge-green">${p["Kondisi"] || "-"}</span>
+        <span class="badge badge-blue">GH ${p["Greenhouse"] || "-"}</span>
+        <span class="badge badge-purple">Tanam: ${p["Bulan Tanam"] || "-"}</span>
         <span class="badge ${grading.badge}">Grade ${gradeVal}</span>
       </div>
-
       <div class="section">
         <div class="section-header">
           <div class="section-icon si-green">
@@ -136,15 +135,14 @@
         </div>
         <div class="row-item"><span class="row-label">ID Tanaman</span><span class="row-value" style="font-family:monospace;font-size:12px">${p["ID Tanaman"]}</span></div>
         <div class="row-item"><span class="row-label">ID Marketing</span><span class="row-value" style="font-family:monospace;font-size:12px">${p["ID Marketing"] || "-"}</span></div>
-        <div class="row-item"><span class="row-label">Site</span><span class="row-value">${p["Site"]}</span></div>
-        <div class="row-item"><span class="row-label">Greenhouse</span><span class="row-value">${p["Greenhouse"]}</span></div>
-        <div class="row-item"><span class="row-label">Varietas</span><span class="row-value">${p["Varietas"]}</span></div>
-        <div class="row-item"><span class="row-label">Bulan tanam</span><span class="row-value">${p["Bulan Tanam"]}</span></div>
-        <div class="row-item"><span class="row-label">Row</span><span class="row-value">${p["Row"]}</span></div>
+        <div class="row-item"><span class="row-label">Site</span><span class="row-value">${p["Site"] || "-"}</span></div>
+        <div class="row-item"><span class="row-label">Greenhouse</span><span class="row-value">${p["Greenhouse"] || "-"}</span></div>
+        <div class="row-item"><span class="row-label">Varietas</span><span class="row-value">${p["Varietas"] || "-"}</span></div>
+        <div class="row-item"><span class="row-label">Bulan Tanam</span><span class="row-value">${p["Bulan Tanam"] || "-"}</span></div>
+        <div class="row-item"><span class="row-label">Row</span><span class="row-value">${p["Row"] || "-"}</span></div>
         <div class="row-item"><span class="row-label">Column</span><span class="row-value">${col}</span></div>
-        <div class="row-item"><span class="row-label">Kondisi</span><span class="row-value good">${p["Kondisi"]}</span></div>
+        <div class="row-item"><span class="row-label">Kondisi</span><span class="row-value good">${p["Kondisi"] || "-"}</span></div>
       </div>
-
       <div class="metric-row">
         <div class="metric-card">
           <div class="metric-label">Bobot</div>
@@ -154,12 +152,11 @@
         </div>
         <div class="metric-card">
           <div class="metric-label">Brix</div>
-          <div><span class="metric-val">${brix}</span><span class="metric-unit">°Bx</span></div>
+          <div><span class="metric-val">${brix}</span><span class="metric-unit">${brix !== "-" ? "°Bx" : ""}</span></div>
           <div class="bar-wrap"><div class="bar-fill" style="width:${brixPct}%"></div></div>
           <div class="metric-sub">Skala maks: 20 °Bx</div>
         </div>
       </div>
-
       <div class="grade-card">
         <div class="grade-inner">
           <div class="grade-circle ${grading.cls}">${gradeVal}</div>
@@ -170,7 +167,6 @@
           </div>
         </div>
       </div>
-
       <div class="section">
         <div class="section-header">
           <div class="section-icon si-blue">
@@ -181,9 +177,8 @@
         <div class="row-item"><span class="row-label">Bobot buah</span><span class="row-value">${bobotNum ? bobotNum.toLocaleString("id-ID") + " gr" : bobot}</span></div>
         <div class="row-item"><span class="row-label">Kadar Brix</span><span class="row-value">${brix !== "-" ? brix + " °Bx" : "-"}</span></div>
         <div class="row-item"><span class="row-label">Grade</span><span class="row-value">Grade ${gradeVal}</span></div>
-        <div class="row-item"><span class="row-label">Kondisi tanaman</span><span class="row-value good">${p["Kondisi"]}</span></div>
+        <div class="row-item"><span class="row-label">Kondisi</span><span class="row-value good">${p["Kondisi"] || "-"}</span></div>
       </div>
-
       <div class="footer">
         Diverifikasi oleh <strong>TaniTrack</strong><br>
         Data diperbarui dari Google Sheets secara otomatis
@@ -191,11 +186,13 @@
     `;
   }
 
-  function renderError(id) {
+  function renderError(id, detail) {
     document.getElementById("app").innerHTML = `
       <div class="error-box">
         <h3>Tanaman tidak ditemukan</h3>
-        <p>ID <strong>${id}</strong> tidak ada dalam database.<br>Periksa kembali QR code atau hubungi admin kebun.</p>
+        <p>ID <strong>${id}</strong> tidak ada dalam database.</p>
+        ${detail ? '<p style="margin-top:8px;font-size:11px;color:#bbb"><code>' + detail + '</code></p>' : ''}
+        <p style="margin-top:8px">Periksa kembali QR code atau hubungi admin kebun.</p>
       </div>`;
   }
 
@@ -203,45 +200,37 @@
     const plantId = getPlantId();
     if (!plantId) { renderError("(kosong)"); return; }
 
-    if (SHEET_ID === "1zHx-px6hvAaSWczz1m4eff0vjtmId-uQSvFXBOu8gbo") {
-      const parts = plantId.split("-");
-      const demoBobot = Math.floor(Math.random() * 700) + 800;
-      render({
-        "ID Tanaman"  : plantId,
-        "ID Marketing": "MKT-" + plantId,
-        "Site"        : "Site 2",
-        "Bulan Tanam" : "Januari",
-        "Greenhouse"  : "A",
-        "Varietas"    : "Inthanon",
-        "Row"         : parts[2] ? parseInt(parts[2]) : "-",
-        "Column"      : parts[3] ? parseInt(parts[3]) : "-",
-        "Kondisi"     : "Baik",
-        "Bobot"       : demoBobot.toString(),
-        "Brix"        : (Math.random() * 8 + 10).toFixed(1),
-        "Grading"     : ""
-      });
-      return;
-    }
-
     try {
-      const url  = `https://docs.google.com/spreadsheets/d/${1zHx-px6hvAaSWczz1m4eff0vjtmId-uQSvFXBOu8gbo}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(data_tanaman_greenhouse_A)}`;
+      const url  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
       const res  = await fetch(url);
       const text = await res.text();
-      const json = JSON.parse(text.substring(47).slice(0, -2));
-      const cols = json.table.cols.map(c => c.label);
+
+      // Parse format gviz yang lebih robust
+      const match = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/);
+      if (!match) throw new Error("Format response tidak dikenali");
+      const json = JSON.parse(match[1]);
+
+      const cols = json.table.cols.map(c => (c.label || "").trim());
       const rows = json.table.rows;
 
       let found = null;
       for (const row of rows) {
+        if (!row || !row.c) continue;
         const obj = {};
-        cols.forEach((col, i) => { obj[col] = row.c[i]?.v ?? ""; });
-        if (String(obj["ID Tanaman"]).trim() === plantId.trim()) { found = obj; break; }
+        cols.forEach((col, i) => {
+          const cell = row.c ? row.c[i] : null;
+          obj[col] = (cell && cell.v !== null && cell.v !== undefined) ? cell.v : "";
+        });
+        const rowId = String(obj["ID Tanaman"] || "").trim();
+        if (!rowId) continue;
+        if (rowId === plantId.trim()) { found = obj; break; }
       }
 
       if (found) render(found);
-      else renderError(plantId);
+      else renderError(plantId, "ID tidak cocok di sheet: " + SHEET_NAME);
     } catch(e) {
-      renderError(plantId);
+      console.error(e);
+      renderError(plantId, e.message);
     }
   }
 
