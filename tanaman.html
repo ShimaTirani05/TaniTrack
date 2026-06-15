@@ -201,7 +201,7 @@
     if (!plantId) { renderError("(kosong)"); return; }
 
     try {
-      const url  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      const url  = `https://docs.google.com/spreadsheets/d/${1zHx-px6hvAaSWczz1m4eff0vjtmId-uQSvFXBOu8gbo}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(data_tanaman_greenhouse_A)}`;
       const res  = await fetch(url);
       const text = await res.text();
 
@@ -227,7 +227,7 @@
       }
 
       if (found) render(found);
-      else renderError(plantId, "ID tidak cocok di sheet: " + SHEET_NAME);
+      else renderError(plantId, "ID tidak cocok di sheet: " + data_tanaman_greenhouse_A);
     } catch(e) {
       console.error(e);
       renderError(plantId, e.message);
