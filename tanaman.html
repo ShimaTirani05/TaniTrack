@@ -83,7 +83,7 @@
   </div>
 </div>
 <script>
-  const SHEET_ID   = "GANTI_DENGAN_ID_GOOGLE_SHEETS_KAMU";
+  const SHEET_ID   = "1zHx-px6hvAaSWczz1m4eff0vjtmId-uQSvFXBOu8gbo";
   const SHEET_NAME = "data_tanaman_greenhouse_A";
 
   function getPlantId() {
@@ -203,7 +203,7 @@
     const plantId = getPlantId();
     if (!plantId) { renderError("(kosong)"); return; }
 
-    if (SHEET_ID === "GANTI_DENGAN_ID_GOOGLE_SHEETS_KAMU") {
+    if (SHEET_ID === "1zHx-px6hvAaSWczz1m4eff0vjtmId-uQSvFXBOu8gbo") {
       const parts = plantId.split("-");
       const demoBobot = Math.floor(Math.random() * 700) + 800;
       render({
@@ -224,7 +224,7 @@
     }
 
     try {
-      const url  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      const url  = `https://docs.google.com/spreadsheets/d/${1zHx-px6hvAaSWczz1m4eff0vjtmId-uQSvFXBOu8gbo}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(data_tanaman_greenhouse_A)}`;
       const res  = await fetch(url);
       const text = await res.text();
       const json = JSON.parse(text.substring(47).slice(0, -2));
