@@ -175,11 +175,21 @@
     if (!raw || raw === "-") return null;
     var s = String(raw).trim();
     var d;
+
+    // Format gviz: Date(2026,3,10) — bulan 0-indexed!
+    var gvizMatch = s.match(/^Date\((\d{4}),(\d{1,2}),(\d{1,2})\)$/);
+    if (gvizMatch) {
+      d = new Date(+gvizMatch[1], +gvizMatch[2], +gvizMatch[3]);
+      return (!isNaN(d.getTime())) ? d : null;
+    }
+    // DD/MM/YYYY
     if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)) {
       var pt = s.split("/");
       d = new Date(+pt[2], +pt[1]-1, +pt[0]);
+    // YYYY-MM-DD
     } else if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
-      d = new Date(s);
+      d = new Date(s + "T00:00:00");
+    // Google Sheets serial number
     } else if (/^\d+(\.\d+)?$/.test(s)) {
       d = new Date(Math.round((parseFloat(s)-25569)*86400000));
     } else {
@@ -573,8 +583,22 @@
           for (var j=0; j<cols.length; j++) {
             var cell = row.c[j];
             if (cell && cell.v !== null && cell.v !== undefined) {
-              // Pakai formatted value untuk tanggal
-              obj[cols[j]] = (cell.f && String(cell.v).match(/^\d+(\.\d+)?$/)) ? cell.f : cell.v;
+              // Untuk tanggal: simpan sebagai "Date(Y,M,D)" agar bisa di-parse
+              var cv = cell.v;
+              if (typeof cv === "object" && cv !== null && cv.constructor) {
+                // Object Date dari gviz
+                var tmp = new Date(cv);
+                if (!isNaN(tmp.getTime())) {
+                  obj[cols[j]] = "Date("+tmp.getFullYear()+","+(tmp.getMonth()+1)+","+tmp.getDate()+")";
+                } else {
+                  obj[cols[j]] = cell.f || String(cv);
+                }
+              } else if (cell.f && String(cv).match(/^\d+(\.\d+)?$/) && String(cell.f).match(/[a-zA-Z]/)) {
+                // Serial number dengan formatted string (misal "1/4/2026")
+                obj[cols[j]] = cell.f;
+              } else {
+                obj[cols[j]] = cv;
+              }
             } else { obj[cols[j]] = ""; }
           }
           var rowId = String(obj["ID Tanaman"]||"").trim();
